@@ -1,0 +1,126 @@
+html, body {
+    background-color: rgb(5, 5, 39);
+    color: rgb(91, 222, 255);;
+    height: 100%;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+}
+/* Game Start Screen */
+#start-screen {
+    height: 100%;
+    width: 100%;
+    padding: 100px;
+    background-color: black;
+    font-size: 2rem;
+    text-align: center;
+}
+#title {
+    color: rgb(91, 222, 255);
+}
+#game-start {
+    color: white;
+    animation: blinker 2.5s linear infinite;
+}
+
+
+/* Character Creation Form */
+.fullWidth {
+    width: 100%;
+}
+.niceInput {
+    height: 75px;
+    width: 50%;
+    line-height: 2;
+    background-color: inherit;
+    color: rgb(70, 120, 138);
+    border-style: none;
+    border-bottom: 1.5px solid rgb(70, 120, 138);
+    outline: none;
+    font-size: 2rem;
+
+}
+.niceLabel {
+    box-sizing: border-box;
+    width: 750px;
+    margin: 10px;
+    font-size: 1.5rem;
+    padding: 0;
+}
+.selectionBtn {
+    height: 50px;
+    width: 125px;
+    margin: 10px;
+    background-color: rgb(91, 222, 255);
+    color: white;
+    border-style: none;
+    border-radius: 3px;
+    text-transform: capitalize;
+    font-size: 1.25rem;
+}
+#raceDiv {
+    display: inline-block;
+}
+
+
+/* ... */
+#player-action {
+    float: left;
+    width: 75%;
+}
+.character-card {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    height: 325px;
+    width: 200px;
+    background-color: black;
+    border: 1px solid rgb(70, 120, 138);
+    border-radius: 5px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.character-card h2 {
+    border-bottom: 1px solid rgb(70, 120, 138);
+}
+
+.character-card p {
+    margin: 4px 0;
+}
+
+.char-stats {
+    text-align: left;
+    border-top: 1px solid rgb(70, 120, 138);
+}
+
+#char-desc {
+    background-color: rgb(70, 120, 138);
+    color: white;
+}
+
+/* Player Info Section */
+#player-info {
+    float: left;
+    height: 100%;
+    width: 25%;
+    background-color: rgb(2, 5, 36);
+    color: white;
+}
+/* Pseudo Classes */
+
+.character-card:hover {
+    border: 2px solid rgb(70, 120, 138);
+    box-shadow: 3px 3px;
+}
+.selectionBtn:hover {
+    background-color: white;
+    color: rgb(91, 222, 255);
+    box-shadow: 2px 2px;
+}
+
+/* Custom Animations */
+@keyframes blinker {
+    50% {
+        opacity: 0.1;
+    }
+}
