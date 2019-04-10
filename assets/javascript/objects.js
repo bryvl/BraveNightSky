@@ -1,4 +1,25 @@
-// Global Variables and Functions
+// Global Variables, Objects, Functions
+
+var playerStats = {
+    'pName': '',
+    'pGender': '',
+    'pRace': '',
+    'pClass': '',
+    'pLevel': 1,
+    'pExp': 0,
+    'baseHealth': 0,
+    'baseAtk': 0,
+    'damageType': '',
+    'baseDefense': 0,
+    'baseResistance': 0,
+    'baseSpeed': 0,
+    'classDescription': '',
+    'mainWeapon': '', //Maybe change to proficientWeapons[]
+    'subclass': '',
+    'inventory': [],
+    'equipment': [] //This may be better as a separate object. I could copy the items in this array to corresponding properties in a Child Object
+}
+
 var genders = {
     male: '',
     female: '',
@@ -23,9 +44,9 @@ var playerRace;
 
 var characterCreation = function(){
     $('body').prepend(
-        "<form id='character-creation' class='fullWidth'>" +
+        "<div id='character-creation' class='fullWidth'>" +
             "<div id='name-div' class='fullWidth'>" +
-                "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input type='text' class='niceInput'>" +
+                "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input id='charName' type='text' class='niceInput'> <button id='submitName' class='selectionBtn'>Submit Name</button>" +
             "</div>" +
             "<div id='genderDiv' class='fullWidth'>" +
                 "<p class='niceLabel'>" + "What is Your Gender: " + "</p>" +
@@ -33,27 +54,40 @@ var characterCreation = function(){
             "<div id='raceDiv' class='fullWidth'>" +
                 "<p class='niceLabel'>" + "Choose Your Race: " + "</label>" +
             "</div>" +
-        "</form>"
-    )
+            "<div id='finish' class='fullWidth'>" +
+                "<button id='submitOne' class='selectionBtn'> Submit </button>" +
+            "</div>" +
+        "</div>"
+    );
+
     for (var gender in genders) {
         $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>")
     }
     for (var race in races) {
         $('#raceDiv').append("<button id='" + race + "' value='" + race + "' class='selectionBtn raceBtn'>" + race + "</button>")
     }
+    $('#submitName').on('click', function(){
+        playerName = $('#charName').val();
+        playerStats.pName = playerName;
+        // $(document).off('keypress');
+    })
     $('.selectionBtn').on('click', function(){
         var selectedBtn = $(this);
         if(selectedBtn.hasClass('genderBtn')) {
             playerGender = selectedBtn.val();
-            alert(playerGender);
+            playerStats.pGender = playerGender;
+            
         } else if(selectedBtn.hasClass('raceBtn')) {
             playerRace = selectedBtn.val();
-            alert(playerRace);
+            playerStats.pRace = playerRace;
         }
+    })
+    $('#submitOne').on('click', function(){
+        console.log('Your name is ' + playerStats.pName + '. Your gender is ' + playerStats.pGender + '. Your race is ' + playerStats.pRace + '.');
     })
 }
 
-
+// Start Game
 $(document).on('keypress', function(e){
     console.log(e.which);
     gameStart();
@@ -62,12 +96,15 @@ $(document).on('keypress', function(e){
 
 var gameStart = function() {
     $('#start-screen').remove('');
+    // Move to Character Creation Screen
     characterCreation();
 };
 
 
 
 
+
+// Ignore Everything below for now ------------------------------------------------------------------------------------------
 
 //Set up Dice
 //Roll is invoked by 'object.roll()'
@@ -341,26 +378,7 @@ var characterClasses = {
     makeCharacters();
 
     
-    //Player Stats
-    var playerStats = {
-        'pName': '',
-        'pSex': '',
-        'pRace': '',
-        'pClass': '',
-        'pLevel': 1,
-        'pExp': 0,
-        'baseHealth': 0,
-        'baseAtk': 0,
-        'damageType': '',
-        'baseDefense': 0,
-        'baseResistance': 0,
-        'baseSpeed': 0,
-        'classDescription': '',
-        'mainWeapon': '', //Maybe change to proficientWeapons[]
-        'subclass': '',
-        'inventory': [],
-        'equipment': [] //This may be better as a separate object. I could copy the items in this array to corresponding properties in a Child Object
-    }
+    
     //Ask the player questions regarding their character
     // var playerName = prompt('What is your name?').toLowerCase();
     // var playerSex = prompt('Are you male or female?').toLowerCase();
