@@ -1,5 +1,167 @@
 // Global Variables, Objects, Functions
 
+// ----------- Audio Autoplay -----------
+var audio = document.getElementById('myAudio');
+audio.volume = 0.1;
+
+// ------------Generate Stars------------
+// Define Star
+
+let star = $("<div class = 'star'>.</div>");
+
+function generateStars(){
+    for (var i = 0; i < 100; i++) {
+        var star = '<div class="star" style="animation: twinkle '+((Math.random()*5) + 5)+'s linear '+((Math.random()*5) + 5)+'s infinite; top: '+Math.random()*$(window).height()+'px; left: '+Math.random()*$(window).width()+'px;"></div>';
+        $('#start-screen').append(star);    
+    }
+}
+generateStars();
+// --------------------------------------
+
+
+// ------------------------------------------Classes-----------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------
+
+class Hero {
+    constructor(heroName, gender, race){
+        this.heroName = heroName,
+        this.gender = gender,
+        this.race = race,
+        this.level = 1,
+        this.statBaseHealth = 0,
+        this.statBaseAtk = 0,
+        this.statBaseDefense = 0,
+        this.statBaseResistance = 0
+    }
+    attack(otherChar){
+        otherChar.statBaseHealth -= this.statBaseAtk;
+        console.log(otherChar.name + " has " + otherChar.statBaseHealth + " health left.");
+    }
+}
+// ------------------------------------------------------------------------------------------------------------
+
+class Valkyrie extends Hero {
+    constructor(heroName, gender, race, health, atk, def, res){
+        super(heroName, gender, race, health, atk, def, res);
+
+        //extend heroClass with valkyrie specific stats
+        this.name =  'Valkyrie',
+        this.classDescription = 'The Valkyrie is a melee-ranged spellcasting hybrid. Their main focus is providing consistent damage from afar while having excellent defenses up close while threatened.'
+        this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
+        this.subclasses = [];
+    }
+    modifyValkStats(){
+        this.statBaseHealth += 100,
+        this.statBaseAtk += 50,
+        this.statBaseDefense += 20,
+        this.statBaseResistance += 20
+    }
+}
+
+class Weaver extends Hero {
+    constructor(heroName, gender, race, health, atk, def, res){
+        super(heroName, gender, race, health, atk, def, res);
+        //extend heroClass with weaver specific stats
+        this.name =  'Weaver',
+        this.classDescription = 'The Weaver is a conduit of the universe, but strives to be its conductor. Manipulating fundamental principles of physics, the weaver';
+        this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
+        this.subclasses = ['Loki - illusory powers', 'Grav - Devastating Damage and crowd control'];
+    }
+    modifyWeavStats(){
+        this.statBaseHealth += 90,
+        this.statBaseAtk += 60,
+        this.statBaseDefense += 20,
+        this.statBaseResistance += 30
+    }
+}
+
+class Colossus extends Hero {
+    constructor(heroName, gender, race, health, atk, def, res){
+        super(heroName, gender, race, health, atk, def, res);
+        //extend heroClass with weaver specific stats
+        this.name =  'Colossus',
+        this.classDescription = 'Frontline and center, the Colossus throws themself with calculated abandon to consume all the damage they can and provide openings for their team to lay down damage.';
+        this.mainWeapon = 'Barrier Shield - projected from an inconspicuous piece of tech on their wrists';
+        this.subclasses = ['Behemoth - increased defenses', 'Tamer - increased mobility through Mech', 'Titan - more control abilities, and they cost less'];
+    }
+    modifyColoStats(){
+        this.statBaseHealth += 120,
+        this.statBaseAtk += 30,
+        this.statBaseDefense += 40,
+        this.statBaseResistance += 40
+    }
+}
+
+class Hunter extends Hero {
+    constructor(heroName, gender, race, health, atk, def, res){
+        super(heroName, gender, race, health, atk, def, res);
+        //extend heroClass with weaver specific stats
+        this.name =  'Hunter',
+        this.classDescription = 'The Hunter, also known as the Dancer for its agility and apex control of its body in space, is the paragon of assassination. Killing is an art.';
+        this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
+        this.subclasses = ['Dancer - increased mobility', 'Apparition - increased stealth', 'Silencer - increased range and traps'];
+    }
+    modifyHuntStats(){
+        this.statBaseHealth += 80,
+        this.statBaseAtk += 70,
+        this.statBaseDefense += 30,
+        this.statBaseResistance += 20
+        
+    }
+}
+
+class Vocalist extends Hero {
+    constructor(heroName, gender, race, health, atk, def, res){
+        super(heroName, gender, race, health, atk, def, res);
+        //extend heroClass with weaver specific stats
+        this.name =  'Vocalist',
+        this.classDescription = 'The Vocalist employs the power of suggestion and logic to reason the conditions of those around him into better or worse states.';
+        this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
+        this.subclasses = ['Speaker', 'Soothsayer'];
+    }
+    modifyVocaStats(){
+        this.statBaseHealth += 120,
+        this.statBaseAtk += 30,
+        this.statBaseDefense += 40,
+        this.statBaseResistance += 40
+        
+    }
+}
+
+var characters = [Valkyrie, Weaver, Colossus, Hunter, Vocalist];
+
+// --------------------------------------------------------------------------------------------------------
+console.log("Character Classes: " + characters);
+console.log(Hero);
+console.log(Valkyrie);
+
+// -----Testing Initiating Character Classes-----
+const leigh = new Valkyrie('Leigh', 'female', 'Avianni');
+leigh.modifyValkStats();
+console.log(leigh);
+
+const bryan = new Weaver('Bryan', 'male', 'Avianni');
+bryan.modifyWeavStats();
+console.log(bryan);
+
+const kach = new Colossus('Kach', 'male', 'Human');
+kach.modifyColoStats();
+console.log(kach);
+
+const caroline = new Hunter('Caroline', 'female', 'Praenobis');
+caroline.modifyHuntStats();
+console.log(caroline);
+
+const ian = new Vocalist('Ian', 'non-binary', 'Praenobis');
+ian.modifyVocaStats();
+console.log(ian);
+
+
+// --------------------------------SubClasses-------------------------------------------
+
+
+// valkyrie.attack(colossus);
+
 var playerStats = {
     'pName': '',
     'pGender': '',
@@ -12,12 +174,28 @@ var playerStats = {
     'damageType': '',
     'baseDefense': 0,
     'baseResistance': 0,
-    'baseSpeed': 0,
     'classDescription': '',
     'mainWeapon': '', //Maybe change to proficientWeapons[]
     'subclass': '',
     'inventory': [],
     'equipment': [] //This may be better as a separate object. I could copy the items in this array to corresponding properties in a Child Object
+}
+
+var characterClasses = {
+    vocalist : {
+        'className': 'vocalist',
+        'statBaseHealth': 85,
+        'statBaseAtk': 100,
+        'statDamageType': 'Physical',
+        'statBaseDefense': 100,
+        'statBaseResistance': 100,
+        'classDescription': 'The Vocalist employs the power of suggestion and logic to reason the conditions of those around him into better or worse states.',
+        'mainWeapon': 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.',
+        'subclasses': {
+            'speaker':  '',
+            'soothSayer': ''
+        }
+    }
 }
 
 var genders = {
@@ -57,8 +235,18 @@ var characterCreation = function(){
             "<div id='finish' class='fullWidth'>" +
                 "<button id='submitOne' class='selectionBtn'> Submit </button>" +
             "</div>" +
+            '<div id="player-action">' +
+                '<div id="character-choice"></div>' +
+                '<div id="char-desc" class="invisible"></div>' +
+            '</div>' +
         "</div>"
     );
+    $('#player-action').prepend(
+        "<div id='classDiv' class='fullWidth'>" +
+        "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
+        "</div>"
+    );
+    makeCharacters();
 
     for (var gender in genders) {
         $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>")
@@ -87,7 +275,7 @@ var characterCreation = function(){
     })
 }
 
-// Start Game
+//---------------------------- Start Game ------------------------------------------------------------------------------------
 $(document).on('keypress', function(e){
     console.log(e.which);
     gameStart();
@@ -105,254 +293,19 @@ var gameStart = function() {
 
 
 // Ignore Everything below for now ------------------------------------------------------------------------------------------
-
-//Set up Dice
-//Roll is invoked by 'object.roll()'
     
-    var d4 = {
-        sides: 4,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        } 
-    }
-    var d6 = {
-        sides: 6,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        } 
-    }
-    var d8 = {
-        sides: 8,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        } 
-    }
-    var d10 = {
-        sides: 10,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        } 
-    }
-    var d12 = {
-        sides: 12,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        } 
-    }
-    var d20 = {
-        sides: 20,
-        roll: function () {
-            var randomNum = Math.floor(Math.random() * this.sides) + 1;
-            console.log(randomNum);
-            return randomNum;
-        }
-    }
 
-//-------------------Weapons & Gear------------------------------------------------------------------
-//Item Rarities
-var common, uncommon, rare, epic, legendary, mythic;
-// Convert all these to Objects
-common = {
-    gearSlot: '',
-    statGain1: 0, //Adds hard stat to playerClass Object
-    colorCode: 'white',
-    itemValue: 'low', //Determines what price an item of this rarity might sell or barter for
-    isInfusable: false, //Whether this level rarity item is able to receive other items to level up
-    powerLevel: 0, //Number displaying how powerful an item is before any Infusion. Mostly for user clarity. (May be unnecessary).
-}
-uncommon = {
-    gearSlot: '',
-    statGain1: 0,
-    statGain2: 0,
-    colorCode: 'green',
-    itemValue: 'low to moderate',
-    powerLevel: 0,
-    isInfusable: false
-}
-rare = {
-    gearSlot: '',
-    statGain1: 0,
-    statGain2: 0,
-    statGain3: 0,
-    colorCode: 'blue',
-    itemValue: 'moderate to high',
-    powerLevel: 0,
-    isInfusable: false,
-    flavorText: ' '
-    
-}
-epic = {
-    gearSlot: '',
-    statGain1: 0,
-    statGain2: 0,
-    statGain3: 0,
-    colorCode: 'purple',
-    itemValue: 'high',
-    powerLevel: 0,
-    isInfusable: true,
-    infusionStatus: 0, //Item's current infusion status by percentage
-    flavorText: ' '
-}
-legendary = {
-    gearSlot: '',
-    statGain1: 0,
-    statGain2: 0,
-    statGain3: 0,
-    passive: ' ',
-    colorCode: 'gold',
-    itemValue: 'very high', 
-    powerLevel: 0,
-    isInfusable: true,
-    infusionStatus: 0,
-    flavorText: ' '
-}
-mythic = {
-    gearSlot: '',
-    statGain1: 0,
-    statGain2: 0,
-    statGain3: 0,
-    passive: 0,
-    colorCode: 'red',
-    itemValue: 'invaluable',
-    powerLevel: 0,
-    isInfusable: true,
-    infusionStatus: 0,
-    flavorText: ' '
-}
-// var itemRarities = [common, uncommon, rare, epic, legendary, mythic];
-// var gearSlot = [helmet, torso, legs, arms, ring, weaponOne, weaponTwo, weaponThree];
-
-// var helmOfAwe_Aegishjalmr = {
-//     gearSlot: helmet,
-//     itemRarity: mythic,
-//     statGain1: playerStats.baseHealth + 250,
-//     statGain2: playerStats.baseAtk + 100,
-//     passive: 'While surrounded by more than two enemies and further than 30ft from the nearest ally, gain 50% damage reduction and +5 * (number of enemies in range) to attacks.',
-//     flavorText: 'The Helm of Awe I wore before the sons of men In defense of my treasure; Amongst all, I alone was strong, I thought to myself, For I found no power a match for my own.',
-// }
-
-// var rustyDagger = {
-//     gearSlot: weaponThree,
-//     itemRarity: common,
-//     statGain1: playerStats.baseAtk + 10,
-//     flavorText: '',
-// }
-
-// //
-// class commonItem {
-//     constructor(gearSlot, itemRarity, statGain1) {
-        
-//     }
-// }
-// var commonLoot = {
-//     rustyDagger: {
-//         gearSlot: weaponThree,
-//         itemRarity: common,
-//         statGain1: playerStats.baseAtk + 10
-//     },
-//     standardIssueRifle: {
-//         gearSlot: weaponTwo,
-//         itemRarity: common,
-//         statGain1: playerStats.baseAtk + 20
-//     },
-//     shoddyBow: {
-//         gearSlot: weaponOne,
-//         itemRarity: common,
-//         statGain1: playerStats.baseAtk + 15
-//     }
-
-// }
-
-// Audio Autoplay
-var audio = document.getElementById('myAudio');
-audio.volume = 0.05;
 
 //Set up Player Class Objects
 // The Classes below may become subclasses. At the very least subclasses need to be fleshed out.
     
 var isCharChosen = false;
 
-
-var characterClasses = {
-    valkyrie : {
-        'className': 'valkyrie',
-        'statBaseHealth': 100,
-        'statBaseAtk': 125,
-        'statDamageType': 'Magic',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'statBaseSpeed': 100,
-        'classDescription': 'The Valkyrie is a melee-ranged spellcasting hybrid. Their main focus is providing consistent damage from afar while having excellent defenses up close while threatened. ',
-        'mainWeapon': 'Javelin - a long lance like rod that fires devastating energy projectiles.',
-        'subclasses': []
-    },
-    weaver : {
-        'className': 'weaver',
-        'statBaseHealth': 90,
-        'statBaseAtk': 100,
-        'statDamageType': 'Magic',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'statBaseSpeed': 100,
-        'classDescription': 'The Weaver is a student of the universe, but strives to be its sculptor. Manipulating fundamental principles of physics, the weaver',
-        'mainWeapon': 'Javelin - a long lance like rod that fires devastating energy projectiles.',
-        'subclasses': ['Loki - illusory powers', 'Grav - Devastating Damage and crowd control']
-    },
-    colossus : {
-        'className': 'colossus',
-        'statBaseHealth': 150,
-        'statBaseAtk': 100,
-        'statDamageType': 'Physical',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'statBaseSpeed': 100,
-        'classDescription': 'Frontline and center, the Colossus throws themself with calculated abandon to consume all the damage they can and provide openings for their team to lay down damage.',
-        'mainWeapon': 'Barrier Shield - projected from an inconspicuous piece of tech on their wrists',
-        'subclasses': ['Behemoth - increased defenses', 'Tamer - increased mobility through Mech', 'Titan - more control abilities, and they cost less']
-    },
-    hunter : {
-        'className': 'hunter',
-        'statBaseHealth': 75,
-        'statBaseAtk': 100,
-        'statDamageType': 'Physical',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'statBaseSpeed': 100,
-        'classDescription': 'The Hunter, also known as the Dancer for its agility and apex control of its body in space, is the paragon of assassination. Killing is an art.',
-        'mainWeapon': 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.',
-        'subclasses': ['Dancer - increased mobility', 'Apparition - increased stealth', 'Silencer - increased range and traps']
-    },
-    vocalist : {
-        'className': 'vocalist',
-        'statBaseHealth': 85,
-        'statBaseAtk': 100,
-        'statDamageType': 'Physical',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'statBaseSpeed': 100,
-        'classDescription': 'The Vocalist employs the power of suggestion and logic to reason the conditions of those around him into better or worse states.',
-        'mainWeapon': 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.',
-        'subclasses': {
-            'speaker':  '',
-            'soothSayer': ''
-        }
-    }
-}
     
     // ------------------------ presenting options to choose
     var makeCharacters = function() {
         for (var charClass in characterClasses) {
-            var characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
+            characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
             var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
             var charStatsDiv = $("<div class ='char-stats'>");
 
@@ -372,10 +325,7 @@ var characterClasses = {
             }
         }
         
-        
     }
-
-    makeCharacters();
 
     
     

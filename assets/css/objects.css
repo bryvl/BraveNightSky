@@ -1,10 +1,11 @@
 html, body {
-    background-color: rgb(5, 5, 39);
-    color: rgb(91, 222, 255);;
+    background-color: black;
+    color: rgb(91, 222, 255);
     height: 100%;
     padding: 0;
     font-family: 'Orbitron', sans-serif;
 }
+
 /* Game Start Screen */
 #start-screen {
     height: 100%;
@@ -21,7 +22,23 @@ html, body {
     color: white;
     animation: blinker 2.5s linear infinite;
 }
+.star{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(255,255,255,0.0);
+    border-radius: 5px;
+}
+/* Universal Styles */
+#player-action {
+    background-color: #111;
+    border: 1px solid rgb(91, 222, 255);
+    border-radius: 5px;
 
+}
+.invisible {
+    visibility: hidden;
+}
 
 /* Character Creation Form */
 .fullWidth {
@@ -51,7 +68,7 @@ html, body {
     width: 125px;
     margin: 10px;
     background-color: rgb(91, 222, 255);
-    color: white;
+    color: rgb(5, 5, 39);
     border-style: none;
     border-radius: 3px;
     text-transform: capitalize;
@@ -74,14 +91,16 @@ html, body {
     height: 325px;
     width: 200px;
     background-color: black;
-    border: 1px solid rgb(70, 120, 138);
+    border: 1px solid rgb(91, 222, 255);
     border-radius: 5px;
     text-align: center;
     text-transform: capitalize;
+    font-family: Aldrich;
 }
 
 .character-card h2 {
-    border-bottom: 1px solid rgb(70, 120, 138);
+    border-bottom: 1px solid rgb(91, 222, 255);
+    font-family: Orbitron;
 }
 
 .character-card p {
@@ -90,12 +109,14 @@ html, body {
 
 .char-stats {
     text-align: left;
-    border-top: 1px solid rgb(70, 120, 138);
+    border-top: 1px solid rgb(91, 222, 255);
 }
 
+
 #char-desc {
-    background-color: rgb(70, 120, 138);
-    color: white;
+    background-color: black;
+    color: rgb(91, 222, 255);
+    font-family: Aldrich;
 }
 
 /* Player Info Section */
@@ -124,3 +145,24 @@ html, body {
         opacity: 0.1;
     }
 }
+
+@keyframes twinkle {
+    0% {
+      transform: scale(1, 1);
+      background: rgba(255,255,255,0.0);
+      animation-timing-function: ease-in;
+    }
+    60% {
+      transform: scale(0.8, 0.8);
+      background: rgba(255,255,255,1);
+      animation-timing-function: ease-out;
+    }
+    80% {
+      background: rgba(255,255,255,0.00);
+      transform: scale(1, 1);
+    }
+    100% {
+      background: rgba(255,255,255,0.0);
+      transform: scale(1, 1);
+    }
+  }
