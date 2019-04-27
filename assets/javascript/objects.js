@@ -2,7 +2,7 @@
 
 // ----------- Audio Autoplay -----------
 var audio = document.getElementById('myAudio');
-audio.volume = 0.1;
+audio.volume = 0.05;
 
 // ------------Generate Stars------------
 // Define Star
@@ -37,6 +37,23 @@ class Hero {
         otherChar.statBaseHealth -= this.statBaseAtk;
         console.log(otherChar.name + " has " + otherChar.statBaseHealth + " health left.");
     }
+    modifyClassStats(health, atk, def, res){
+        this.statBaseHealth += health,
+        this.statBaseAtk += atk,
+        this.statBaseDefense += def,
+        this.statBaseResistance += res
+    }
+    renderCard(charClass){
+        var characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
+        var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
+        var charStatsDiv = $("<div class ='char-stats'>");
+
+        characterCard.append(cardImg);
+        characterCard.append(charStatsDiv);
+        $('#character-choice').append(characterCard);
+
+        $('#char-desc').append("<div>" + this.classDescription + "</div>" );
+    };
 }
 // ------------------------------------------------------------------------------------------------------------
 
@@ -49,12 +66,8 @@ class Valkyrie extends Hero {
         this.classDescription = 'The Valkyrie is a melee-ranged spellcasting hybrid. Their main focus is providing consistent damage from afar while having excellent defenses up close while threatened.'
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = [];
-    }
-    modifyValkStats(){
-        this.statBaseHealth += 100,
-        this.statBaseAtk += 50,
-        this.statBaseDefense += 20,
-        this.statBaseResistance += 20
+        this.modifyClassStats(100, 50, 20, 20);
+        this.renderCard("Valkyrie");
     }
 }
 
@@ -66,13 +79,10 @@ class Weaver extends Hero {
         this.classDescription = 'The Weaver is a conduit of the universe, but strives to be its conductor. Manipulating fundamental principles of physics, the weaver';
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = ['Loki - illusory powers', 'Grav - Devastating Damage and crowd control'];
+        this.modifyClassStats(90, 60, 20, 30);
+        this.renderCard("Weaver");
     }
-    modifyWeavStats(){
-        this.statBaseHealth += 90,
-        this.statBaseAtk += 60,
-        this.statBaseDefense += 20,
-        this.statBaseResistance += 30
-    }
+    
 }
 
 class Colossus extends Hero {
@@ -83,12 +93,8 @@ class Colossus extends Hero {
         this.classDescription = 'Frontline and center, the Colossus throws themself with calculated abandon to consume all the damage they can and provide openings for their team to lay down damage.';
         this.mainWeapon = 'Barrier Shield - projected from an inconspicuous piece of tech on their wrists';
         this.subclasses = ['Behemoth - increased defenses', 'Tamer - increased mobility through Mech', 'Titan - more control abilities, and they cost less'];
-    }
-    modifyColoStats(){
-        this.statBaseHealth += 120,
-        this.statBaseAtk += 30,
-        this.statBaseDefense += 40,
-        this.statBaseResistance += 40
+        this.modifyClassStats(120, 30, 40, 40);
+        this.renderCard("Colossus");
     }
 }
 
@@ -100,13 +106,8 @@ class Hunter extends Hero {
         this.classDescription = 'The Hunter, also known as the Dancer for its agility and apex control of its body in space, is the paragon of assassination. Killing is an art.';
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Dancer - increased mobility', 'Apparition - increased stealth', 'Silencer - increased range and traps'];
-    }
-    modifyHuntStats(){
-        this.statBaseHealth += 80,
-        this.statBaseAtk += 70,
-        this.statBaseDefense += 30,
-        this.statBaseResistance += 20
-        
+        this.modifyClassStats(80, 70, 30, 20);
+        this.renderCard("Hunter");
     }
 }
 
@@ -118,43 +119,32 @@ class Vocalist extends Hero {
         this.classDescription = 'The Vocalist employs the power of suggestion and logic to reason the conditions of those around him into better or worse states.';
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Speaker', 'Soothsayer'];
-    }
-    modifyVocaStats(){
-        this.statBaseHealth += 120,
-        this.statBaseAtk += 30,
-        this.statBaseDefense += 40,
-        this.statBaseResistance += 40
-        
+        this.modifyClassStats(100, 30, 30, 30);
+        this.renderCard("Vocalist");
     }
 }
 
-var characters = [Valkyrie, Weaver, Colossus, Hunter, Vocalist];
-
-// --------------------------------------------------------------------------------------------------------
-console.log("Character Classes: " + characters);
-console.log(Hero);
-console.log(Valkyrie);
-
 // -----Testing Initiating Character Classes-----
-const leigh = new Valkyrie('Leigh', 'female', 'Avianni');
-leigh.modifyValkStats();
-console.log(leigh);
+$('body').on('load', '#character-creation', function(){
+    const demoValk = new Valkyrie();
+    console.log(demoValk);
+});
 
-const bryan = new Weaver('Bryan', 'male', 'Avianni');
-bryan.modifyWeavStats();
-console.log(bryan);
+// const bryan = new Weaver('Bryan', 'male', 'Avianni');
+// bryan.modifyWeavStats();
+// console.log(bryan);
 
-const kach = new Colossus('Kach', 'male', 'Human');
-kach.modifyColoStats();
-console.log(kach);
+// const kach = new Colossus('Kach', 'male', 'Human');
+// kach.modifyColoStats();
+// console.log(kach);
 
-const caroline = new Hunter('Caroline', 'female', 'Praenobis');
-caroline.modifyHuntStats();
-console.log(caroline);
+// const caroline = new Hunter('Caroline', 'female', 'Praenobis');
+// caroline.modifyHuntStats();
+// console.log(caroline);
 
-const ian = new Vocalist('Ian', 'non-binary', 'Praenobis');
-ian.modifyVocaStats();
-console.log(ian);
+// const ian = new Vocalist('Ian', 'non-binary', 'Praenobis');
+// ian.modifyVocaStats();
+// console.log(ian);
 
 
 // --------------------------------SubClasses-------------------------------------------
@@ -246,7 +236,7 @@ var characterCreation = function(){
         "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
         "</div>"
     );
-    makeCharacters();
+    // makeCharacters();
 
     for (var gender in genders) {
         $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>")
@@ -292,90 +282,38 @@ var gameStart = function() {
 
 
 
-// Ignore Everything below for now ------------------------------------------------------------------------------------------
-    
-
-
-//Set up Player Class Objects
-// The Classes below may become subclasses. At the very least subclasses need to be fleshed out.
-    
-var isCharChosen = false;
+// --------------------------------***IGNORE EVERYTHING BELOW FOR NOW*** ------------------------------------------
+// --------------------------------***IGNORE EVERYTHING BELOW FOR NOW*** ------------------------------------------
+// --------------------------------***IGNORE EVERYTHING BELOW FOR NOW*** ------------------------------------------
+// --------------------------------***IGNORE EVERYTHING BELOW FOR NOW*** ------------------------------------------
+// --------------------------------***IGNORE EVERYTHING BELOW FOR NOW*** ------------------------------------------
 
     
     // ------------------------ presenting options to choose
-    var makeCharacters = function() {
-        for (var charClass in characterClasses) {
-            characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
-            var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
-            var charStatsDiv = $("<div class ='char-stats'>");
+    // var makeCharacters = function() {
+    //     for (var charClass in characterClasses) {
+    //         characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
+    //         var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
+    //         var charStatsDiv = $("<div class ='char-stats'>");
 
-            characterCard.append(cardImg);
-            characterCard.append(charStatsDiv);
-            $('#character-choice').append(characterCard);
+    //         characterCard.append(cardImg);
+    //         characterCard.append(charStatsDiv);
+    //         $('#character-choice').append(characterCard);
 
-            var character = characterClasses[charClass];
-            $('#char-desc').append("<div>" + character.classDescription + "</div>" );
-            console.log(character);
-            for (var prop in character) {
-                console.log(prop + ": " + character[prop]);
-                if(prop.indexOf('stat') !== -1) {
-                    $(charStatsDiv).append("<p>" + prop + ": " + character[prop] + "</p>");
-                }
+    //         var character = characterClasses[charClass];
+    //         $('#char-desc').append("<div>" + character.classDescription + "</div>" );
+    //         console.log(character);
+    //         for (var prop in character) {
+    //             console.log(prop + ": " + character[prop]);
+    //             if(prop.indexOf('stat') !== -1) {
+    //                 $(charStatsDiv).append("<p>" + prop + ": " + character[prop] + "</p>");
+    //             }
                 
-            }
-        }
+    //         }
+    //     }
         
-    }
-
-    
-    
-    //Ask the player questions regarding their character
-    // var playerName = prompt('What is your name?').toLowerCase();
-    // var playerSex = prompt('Are you male or female?').toLowerCase();
-    // var playerRace = prompt('Pick from the following races: ' + 'Human, Sofia (new stage in human evolution), Mechan (human conscience in a mech frame), Brakke (From nearby system, hardened exterior)').toLowerCase();
-    // var playerClass = prompt('Pick from the following classes: ' + 'Valkyrie, Weaver, Colossus, Hunter, Vocalist').toLowerCase();
-
-    //Validate Sex 
-    // while (playerSex !== 'male' || playerSex !== 'female') {
-    //     playerSex = prompt(" '" + playerSex + "' " + 'is not a valid entry. Are you male or female?');
     // }
 
-    //Store base stats in the player stats object based on what the player chose as their class
-    // if(playerClass === 'valkyrie') {
-    //     // Yay! This loop does what it sets out to accomplish. It looks for 'x' property in playerStats and copies its value to properties
-    //     // in valkyrieStats of the same name as 'x'. Anything else is left undefined.
-    //     var x;
-    //     for (x in playerStats) {
-    //         playerStats[x] = valkyrieStats[x]; 
-    //         // console.log(playerStats);
-    //     }
-
-    // } else if(playerClass === 'weaver'){
-    //     var x;
-    //     for (x in playerStats) {
-    //         playerStats[x] = weaverStats[x]; 
-    //         console.log(playerStats);
-    //     }
-    // } else if(playerClass === 'colossus'){
-    //     var x;
-    //     for (x in playerStats) {
-    //         playerStats[x] = colossusStats[x]; 
-    //         console.log(playerStats);
-    //     }
-    // } else if(playerClass === 'hunter'){
-    //     var x;
-    //     for (x in playerStats) { 
-    //         playerStats[x] = hunterStats[x]; 
-    //         console.log(playerStats);
-    //     }
-    // } else if(playerClass === 'vocalist'){
-    //     var x;
-    //     for (x in playerStats) { 
-    //         playerStats[x] = vocalistStats[x]; 
-    //         console.log(playerStats);
-    //     }
-    // }
-    
     
     // playerStats.pName = playerName;
     // playerStats.pSex = playerSex;
@@ -395,19 +333,5 @@ var isCharChosen = false;
     //         console.log('Current experience is: ' + playerStats.pExp);
     //     }
     // }
-    // //Battle Sequence
-
-    // levelUp();
 
     // console.log(playerStats);
-
-
-
-    // export {
-    //     valkyrieStats,
-    //     weaverStats,
-    //     colossusStats,
-    //     hunterStats,
-    //     vocalistStats
-        
-    // }
