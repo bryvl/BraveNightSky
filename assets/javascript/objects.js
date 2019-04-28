@@ -1,8 +1,9 @@
 // Global Variables, Objects, Functions
 
 // ----------- Audio Autoplay -----------
-var audio = document.getElementById('myAudio');
-audio.volume = 0.05;
+// NOT CURRENTLY NEEDED, PLUS AUTOPLAY FUNCTIONALITY REMOVED FROM CHROME
+// var audio = document.getElementById('myAudio');
+// audio.volume = 0.05;
 
 // ------------Generate Stars------------
 // Define Star
@@ -28,6 +29,8 @@ class Hero {
         this.gender = gender,
         this.race = race,
         this.level = 1,
+        this.xp = 0,
+        this.xpToLevelUp
         this.statBaseHealth = 0,
         this.statBaseAtk = 0,
         this.statBaseDefense = 0,
@@ -44,15 +47,31 @@ class Hero {
         this.statBaseResistance += res
     }
     renderCard(charClass){
+        var self = this;
         var characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
         var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
         var charStatsDiv = $("<div class ='char-stats'>");
 
         characterCard.append(cardImg);
         characterCard.append(charStatsDiv);
+        charStatsDiv.append("<h4>HP: " + this.statBaseHealth);
+        charStatsDiv.append("<h4>ATK: " + this.statBaseAtk);
+        charStatsDiv.append("<h4>DEF: " + this.statBaseDefense);
+        charStatsDiv.append("<h4>RES: " + this.statBaseResistance);
         $('#character-choice').append(characterCard);
 
         $('#char-desc').append("<div>" + this.classDescription + "</div>" );
+        $(characterCard).on('click', function(){
+            $('#playerHealth').val("<h4>HP: ");
+            $('#playerAtk').val("<h4>ATK: ");
+            $('#playerDef').val("<h4>DEF: ");
+            $('#playerRes').val("<h4>RES: ");
+
+            $('#playerHealth').html("<h4>HP: " + self.statBaseHealth);
+            $('#playerAtk').html("<h4>ATK: " + self.statBaseAtk);
+            $('#playerDef').html("<h4>DEF: " + self.statBaseDefense);
+            $('#playerRes').html("<h4>RES: " + self.statBaseResistance);
+        });
     };
 }
 // ------------------------------------------------------------------------------------------------------------
@@ -125,10 +144,6 @@ class Vocalist extends Hero {
 }
 
 // -----Testing Initiating Character Classes-----
-$('body').on('load', '#character-creation', function(){
-    const demoValk = new Valkyrie();
-    console.log(demoValk);
-});
 
 // const bryan = new Weaver('Bryan', 'male', 'Avianni');
 // bryan.modifyWeavStats();
@@ -203,6 +218,9 @@ var races = {
     },
     praenobis : {
         description: 'A Roman and Elven like race, predating humanity and who knows what else'
+    },
+    anthrosimilim : {
+        description: 'Men and women who traded their flesh for cold, metal bodies in pursuit of eternal concsciousness whether by their will or not.'
     }
 }
 
@@ -213,19 +231,21 @@ var playerRace;
 var characterCreation = function(){
     $('body').prepend(
         "<div id='character-creation' class='fullWidth'>" +
-            "<div id='name-div' class='fullWidth'>" +
-                "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input id='charName' type='text' class='niceInput'> <button id='submitName' class='selectionBtn'>Submit Name</button>" +
+            "<div class='options-box'>" +
+                "<div id='name-div' class='fullWidth'>" +
+                    "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input id='charName' type='text' class='niceInput'> <button id='submitName' class='selectionBtn'>Submit Name</button>" +
+                "</div>" +
+                "<div id='genderDiv' class='fullWidth'>" +
+                    "<p class='niceLabel'>" + "What is Your Gender: " + "</p>" +
+                "</div>" +
+                "<div id='raceDiv' class='fullWidth'>" +
+                    "<p class='niceLabel'>" + "Choose Your Race: " + "</label>" +
+                "</div>" +
+                "<div id='finish' class='fullWidth'>" +
+                    "<button id='submitOne' class='selectionBtn'> Submit </button>" +
+                "</div>" +
             "</div>" +
-            "<div id='genderDiv' class='fullWidth'>" +
-                "<p class='niceLabel'>" + "What is Your Gender: " + "</p>" +
-            "</div>" +
-            "<div id='raceDiv' class='fullWidth'>" +
-                "<p class='niceLabel'>" + "Choose Your Race: " + "</label>" +
-            "</div>" +
-            "<div id='finish' class='fullWidth'>" +
-                "<button id='submitOne' class='selectionBtn'> Submit </button>" +
-            "</div>" +
-            '<div id="player-action">' +
+            '<div id="player-action" class="options-box">' +
                 '<div id="character-choice"></div>' +
                 '<div id="char-desc" class="invisible"></div>' +
             '</div>' +
@@ -236,7 +256,33 @@ var characterCreation = function(){
         "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
         "</div>"
     );
-    // makeCharacters();
+    $('body').prepend(
+        "<div id='playerCharacterInfo' class='options-box'>" +
+            "<h3 id='playerName'>Name: </h3>" +
+            "<h3 id='playerGender'>Gender: </h3>" +
+            "<h3 id='playerRace'>Race: </h3>" +
+            "<div id='playerStats'>" + 
+                "<h3 id='playerHealth'>Health: </h3>" +
+                "<h3 id='playerAtk'>Attack: </h3>" +
+                "<h3 id='playerDef'>Defense: </h3>" + 
+                "<h3 id='playerRes'>Resistance: </h3>" + 
+            "</div>" +
+        "</div>"
+    );
+    // Instantiate Demo versions of classes to display stats on cards.
+    // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
+    const demoValk = new Valkyrie();
+    console.log(demoValk);
+    const demoWeaver = new Weaver();
+    console.log(demoWeaver);
+    const demoColo = new Colossus();
+    console.log(demoColo);
+    const demoHunter = new Hunter();
+    console.log(demoHunter);
+    const demoVocalist = new Vocalist();
+    console.log(demoVocalist);
+    // ---------------------------------------------------------------
 
     for (var gender in genders) {
         $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>")
@@ -246,7 +292,9 @@ var characterCreation = function(){
     }
     $('#submitName').on('click', function(){
         playerName = $('#charName').val();
+        $('#charName').val('');
         playerStats.pName = playerName;
+        $('#playerName').append(playerStats.pName);
         // $(document).off('keypress');
     })
     $('.selectionBtn').on('click', function(){
@@ -254,10 +302,12 @@ var characterCreation = function(){
         if(selectedBtn.hasClass('genderBtn')) {
             playerGender = selectedBtn.val();
             playerStats.pGender = playerGender;
+            $('#playerGender').append(playerStats.pGender);
             
         } else if(selectedBtn.hasClass('raceBtn')) {
             playerRace = selectedBtn.val();
             playerStats.pRace = playerRace;
+            $('#playerRace').append(playerStats.pRace);
         }
     })
     $('#submitOne').on('click', function(){

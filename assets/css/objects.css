@@ -30,10 +30,11 @@ html, body {
     border-radius: 5px;
 }
 /* Universal Styles */
-#player-action {
+.options-box {
     background-color: #111;
     border: 1px solid rgb(91, 222, 255);
     border-radius: 5px;
+    width: 65%;
 
 }
 .invisible {
@@ -49,9 +50,9 @@ html, body {
     width: 25%;
     line-height: 2;
     background-color: inherit;
-    color: rgb(70, 120, 138);
+    color: rgb(91, 222, 255);
     border-style: none;
-    border-bottom: 1.5px solid rgb(70, 120, 138);
+    border-bottom: 1.5px solid rgb(91, 222, 255);
     outline: none;
     font-size: 2rem;
 
@@ -82,7 +83,6 @@ html, body {
 /* ... */
 #player-action {
     float: left;
-    width: 75%;
 }
 .character-card {
     display: inline-block;
@@ -134,7 +134,7 @@ html, body {
     box-shadow: 3px 3px;
 }
 .selectionBtn:hover {
-    background-color: white;
+    background-color: black;
     color: rgb(91, 222, 255);
     box-shadow: 2px 2px;
 }
