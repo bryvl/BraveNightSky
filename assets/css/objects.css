@@ -130,7 +130,7 @@ html, body {
 /* Pseudo Classes */
 
 .character-card:hover {
-    border: 2px solid rgb(70, 120, 138);
+    border: 2px solid rgb(91, 222, 255);
     box-shadow: 3px 3px;
 }
 .selectionBtn:hover {

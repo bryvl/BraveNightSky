@@ -46,21 +46,24 @@ class Hero {
         this.statBaseDefense += def,
         this.statBaseResistance += res
     }
-    renderCard(charClass){
+    renderClass(){
         var self = this;
-        var characterCard = $("<div id='" + charClass + "' class='character-card'>" + "<h2>" + charClass + "</h2>" + "</div>");
+        console.log(self);
+        console.log(Valkyrie);
+
+        var characterCard = $("<div id='" + self.name + "-demoCard' class='character-card'>" + "<h2>" + self.name + "</h2>" + "</div>");
         var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
         var charStatsDiv = $("<div class ='char-stats'>");
 
         characterCard.append(cardImg);
         characterCard.append(charStatsDiv);
-        charStatsDiv.append("<h4>HP: " + this.statBaseHealth);
-        charStatsDiv.append("<h4>ATK: " + this.statBaseAtk);
-        charStatsDiv.append("<h4>DEF: " + this.statBaseDefense);
-        charStatsDiv.append("<h4>RES: " + this.statBaseResistance);
+        charStatsDiv.append("<h4>HP: " + self.statBaseHealth);
+        charStatsDiv.append("<h4>ATK: " + self.statBaseAtk);
+        charStatsDiv.append("<h4>DEF: " + self.statBaseDefense);
+        charStatsDiv.append("<h4>RES: " + self.statBaseResistance);
         $('#character-choice').append(characterCard);
 
-        $('#char-desc').append("<div>" + this.classDescription + "</div>" );
+        $('#char-desc').append("<div>" + self.classDescription + "</div>" );
         $(characterCard).on('click', function(){
             $('#playerHealth').val("<h4>HP: ");
             $('#playerAtk').val("<h4>ATK: ");
@@ -72,7 +75,18 @@ class Hero {
             $('#playerDef').html("<h4>DEF: " + self.statBaseDefense);
             $('#playerRes').html("<h4>RES: " + self.statBaseResistance);
         });
-    };
+    }
+    renderButton(func){
+        var self = this;
+        // console.log(self);
+        var classButton = $("<button/>").attr({
+            'type': 'button',
+            'id': this.name + '-btn',
+            'value': this.name
+        }).html(this.name).bind('click', func);
+        
+        $('#class-tabs').append(classButton);
+    }
 }
 // ------------------------------------------------------------------------------------------------------------
 
@@ -86,7 +100,7 @@ class Valkyrie extends Hero {
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = [];
         this.modifyClassStats(100, 50, 20, 20);
-        this.renderCard("Valkyrie");
+        this.renderButton(this.renderClass);
     }
 }
 
@@ -99,7 +113,7 @@ class Weaver extends Hero {
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = ['Loki - illusory powers', 'Grav - Devastating Damage and crowd control'];
         this.modifyClassStats(90, 60, 20, 30);
-        this.renderCard("Weaver");
+        this.renderButton(this.renderClass);
     }
     
 }
@@ -113,7 +127,7 @@ class Colossus extends Hero {
         this.mainWeapon = 'Barrier Shield - projected from an inconspicuous piece of tech on their wrists';
         this.subclasses = ['Behemoth - increased defenses', 'Tamer - increased mobility through Mech', 'Titan - more control abilities, and they cost less'];
         this.modifyClassStats(120, 30, 40, 40);
-        this.renderCard("Colossus");
+        this.renderButton(this.renderClass);
     }
 }
 
@@ -126,7 +140,7 @@ class Hunter extends Hero {
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Dancer - increased mobility', 'Apparition - increased stealth', 'Silencer - increased range and traps'];
         this.modifyClassStats(80, 70, 30, 20);
-        this.renderCard("Hunter");
+        this.renderButton(this.renderClass);
     }
 }
 
@@ -139,7 +153,7 @@ class Vocalist extends Hero {
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Speaker', 'Soothsayer'];
         this.modifyClassStats(100, 30, 30, 30);
-        this.renderCard("Vocalist");
+        this.renderButton(this.renderClass);
     }
 }
 
@@ -184,23 +198,6 @@ var playerStats = {
     'subclass': '',
     'inventory': [],
     'equipment': [] //This may be better as a separate object. I could copy the items in this array to corresponding properties in a Child Object
-}
-
-var characterClasses = {
-    vocalist : {
-        'className': 'vocalist',
-        'statBaseHealth': 85,
-        'statBaseAtk': 100,
-        'statDamageType': 'Physical',
-        'statBaseDefense': 100,
-        'statBaseResistance': 100,
-        'classDescription': 'The Vocalist employs the power of suggestion and logic to reason the conditions of those around him into better or worse states.',
-        'mainWeapon': 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.',
-        'subclasses': {
-            'speaker':  '',
-            'soothSayer': ''
-        }
-    }
 }
 
 var genders = {
@@ -254,6 +251,11 @@ var characterCreation = function(){
     $('#player-action').prepend(
         "<div id='classDiv' class='fullWidth'>" +
         "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
+        "<div id='class-tabs'>" +
+            // "<button id='weav-btn' onclick='renderClass()'>Weaver</button>" +
+            // "<button id='colo-btn' onclick='renderClass()'>Colossus</button>" +
+            // "<button id='hunt-btn' onclick='renderClass()'>Hunter</button>" +
+            // "<button id='voca-btn' onclick='renderClass()'>Vocalist</button>" +
         "</div>"
     );
     $('body').prepend(
@@ -269,6 +271,9 @@ var characterCreation = function(){
             "</div>" +
         "</div>"
     );
+    function renderClass() {
+        
+    }
     // Instantiate Demo versions of classes to display stats on cards.
     // ---------------------------------------------------------------
     // ---------------------------------------------------------------
