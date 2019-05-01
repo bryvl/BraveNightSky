@@ -46,44 +46,57 @@ class Hero {
         this.statBaseDefense += def,
         this.statBaseResistance += res
     }
-    renderClass(){
+    renderButton(){
         var self = this;
-        console.log(self);
-        console.log(Valkyrie);
+        function renderClass() {
+            $('#character-choice').empty();
+            $('.charClassTab').on('click', function(){
+                $('.active').removeClass('active');
+                $(this).addClass('active');
+            })
+    
+            var characterCard = $("<div id='" + self.name + "-demoCard' class='character-card'>" + "<h2>" + self.name + "</h2>" + "</div>");
+            var cardImgDiv = $("<div class='cardImgDiv'><p>Placeholder</p></div>");
+            var charInfoDiv = $("<div class='charInfoDiv'></div>");
+            var charStatsDiv = $("<div class ='charStatsDiv'>");
+            var charDescDiv = $("<div class ='charDescDiv'>" + "<p>" + self.classDescription + "</p>" + "</div>");
+            
+            characterCard.append(cardImgDiv);
+            charStatsDiv.append("<h4>HP: " + self.statBaseHealth);
+            charStatsDiv.append("<h4>ATK: " + self.statBaseAtk);
+            charStatsDiv.append("<h4>DEF: " + self.statBaseDefense);
+            charStatsDiv.append("<h4>RES: " + self.statBaseResistance);
+            charInfoDiv.append(charStatsDiv);
+            charInfoDiv.append(charDescDiv);
+            characterCard.append(charInfoDiv);
 
-        var characterCard = $("<div id='" + self.name + "-demoCard' class='character-card'>" + "<h2>" + self.name + "</h2>" + "</div>");
-        var cardImg = $("<img src='assets/images/voice.gif' width='175px' height='100px'>");
-        var charStatsDiv = $("<div class ='char-stats'>");
-
-        characterCard.append(cardImg);
-        characterCard.append(charStatsDiv);
-        charStatsDiv.append("<h4>HP: " + self.statBaseHealth);
-        charStatsDiv.append("<h4>ATK: " + self.statBaseAtk);
-        charStatsDiv.append("<h4>DEF: " + self.statBaseDefense);
-        charStatsDiv.append("<h4>RES: " + self.statBaseResistance);
-        $('#character-choice').append(characterCard);
-
-        $('#char-desc').append("<div>" + self.classDescription + "</div>" );
-        $(characterCard).on('click', function(){
-            $('#playerHealth').val("<h4>HP: ");
-            $('#playerAtk').val("<h4>ATK: ");
-            $('#playerDef').val("<h4>DEF: ");
-            $('#playerRes').val("<h4>RES: ");
-
-            $('#playerHealth').html("<h4>HP: " + self.statBaseHealth);
-            $('#playerAtk').html("<h4>ATK: " + self.statBaseAtk);
-            $('#playerDef').html("<h4>DEF: " + self.statBaseDefense);
-            $('#playerRes').html("<h4>RES: " + self.statBaseResistance);
-        });
-    }
-    renderButton(func){
-        var self = this;
-        // console.log(self);
+            
+            $('#character-choice').append(characterCard);
+    
+            // $('#char-desc').append("<div>" + self.classDescription + "</div>" );
+            $(characterCard).on('click', function(){
+                $('#playerHealth').val("<h4>HP: ");
+                $('#playerAtk').val("<h4>ATK: ");
+                $('#playerDef').val("<h4>DEF: ");
+                $('#playerRes').val("<h4>RES: ");
+    
+                $('#playerHealth').html("<h4>HP: " + self.statBaseHealth);
+                playerStats.statBaseHealth = self.statBaseHealth;
+                $('#playerAtk').html("<h4>ATK: " + self.statBaseAtk);
+                playerStats.statBaseAtk = self.statBaseAtk;
+                $('#playerDef').html("<h4>DEF: " + self.statBaseDefense);
+                playerStats.statBaseDefense = self.statBaseDefense;
+                $('#playerRes').html("<h4>RES: " + self.statBaseResistance);
+                playerStats.statBaseResistance = self.statBaseResistance;
+            });
+        }
         var classButton = $("<button/>").attr({
             'type': 'button',
             'id': this.name + '-btn',
+            'class': 'charClassTab',
+            'title': this.name,
             'value': this.name
-        }).html(this.name).bind('click', func);
+        }).html(this.name).bind('click', renderClass);
         
         $('#class-tabs').append(classButton);
     }
@@ -100,7 +113,7 @@ class Valkyrie extends Hero {
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = [];
         this.modifyClassStats(100, 50, 20, 20);
-        this.renderButton(this.renderClass);
+        this.renderButton();
     }
 }
 
@@ -113,7 +126,7 @@ class Weaver extends Hero {
         this.mainWeapon = 'Javelin - a long lance like rod that fires devastating energy projectiles.';
         this.subclasses = ['Loki - illusory powers', 'Grav - Devastating Damage and crowd control'];
         this.modifyClassStats(90, 60, 20, 30);
-        this.renderButton(this.renderClass);
+        this.renderButton();
     }
     
 }
@@ -127,7 +140,7 @@ class Colossus extends Hero {
         this.mainWeapon = 'Barrier Shield - projected from an inconspicuous piece of tech on their wrists';
         this.subclasses = ['Behemoth - increased defenses', 'Tamer - increased mobility through Mech', 'Titan - more control abilities, and they cost less'];
         this.modifyClassStats(120, 30, 40, 40);
-        this.renderButton(this.renderClass);
+        this.renderButton();
     }
 }
 
@@ -140,7 +153,7 @@ class Hunter extends Hero {
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Dancer - increased mobility', 'Apparition - increased stealth', 'Silencer - increased range and traps'];
         this.modifyClassStats(80, 70, 30, 20);
-        this.renderButton(this.renderClass);
+        this.renderButton();
     }
 }
 
@@ -153,7 +166,7 @@ class Vocalist extends Hero {
         this.mainWeapon = 'Atoms Edge (name pending) - a blade sharpened to a submolecular level. Will cut through just about anything.';
         this.subclasses = ['Speaker', 'Soothsayer'];
         this.modifyClassStats(100, 30, 30, 30);
-        this.renderButton(this.renderClass);
+        this.renderButton();
     }
 }
 
@@ -188,11 +201,11 @@ var playerStats = {
     'pClass': '',
     'pLevel': 1,
     'pExp': 0,
-    'baseHealth': 0,
-    'baseAtk': 0,
+    'statBaseHealth': 0,
+    'statBaseAtk': 0,
     'damageType': '',
-    'baseDefense': 0,
-    'baseResistance': 0,
+    'statBaseDefense': 0,
+    'statBaseResistance': 0,
     'classDescription': '',
     'mainWeapon': '', //Maybe change to proficientWeapons[]
     'subclass': '',
@@ -224,53 +237,128 @@ var races = {
 var playerName;
 var playerGender;
 var playerRace;
+var playerHealth;
+var playerAtk;
+var playerDef;
+var playerRes;
 
 var characterCreation = function(){
     $('body').prepend(
-        "<div id='character-creation' class='fullWidth'>" +
-            "<div class='options-box'>" +
-                "<div id='name-div' class='fullWidth'>" +
-                    "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input id='charName' type='text' class='niceInput'> <button id='submitName' class='selectionBtn'>Submit Name</button>" +
-                "</div>" +
-                "<div id='genderDiv' class='fullWidth'>" +
-                    "<p class='niceLabel'>" + "What is Your Gender: " + "</p>" +
-                "</div>" +
-                "<div id='raceDiv' class='fullWidth'>" +
-                    "<p class='niceLabel'>" + "Choose Your Race: " + "</label>" +
-                "</div>" +
-                "<div id='finish' class='fullWidth'>" +
-                    "<button id='submitOne' class='selectionBtn'> Submit </button>" +
-                "</div>" +
-            "</div>" +
-            '<div id="player-action" class="options-box">' +
+        "<div id='character-creation'>" +
+            '<div id="creation-nav">' +
+                '<button id="nav-name" class="nav-btn">Name</button>' +
+                '<button id="nav-gender" class="nav-btn">Gender</button>' +
+                '<button id="nav-race" class="nav-btn">Race</button>' +
+                '<button id="nav-class" class="nav-btn">Class</button>' +
+                '<button id="nav-confirm" class="nav-btn">Create</button>' +
+            '</div>' +
+            '<div id="player-action" class="options-box container">' +
                 '<div id="character-choice"></div>' +
-                '<div id="char-desc" class="invisible"></div>' +
+                '<div id="char-desc"></div>' +
             '</div>' +
         "</div>"
     );
     $('#player-action').prepend(
-        "<div id='classDiv' class='fullWidth'>" +
+        "<div id='classDiv' class='container'>" +
         "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
         "<div id='class-tabs'>" +
-            // "<button id='weav-btn' onclick='renderClass()'>Weaver</button>" +
-            // "<button id='colo-btn' onclick='renderClass()'>Colossus</button>" +
-            // "<button id='hunt-btn' onclick='renderClass()'>Hunter</button>" +
-            // "<button id='voca-btn' onclick='renderClass()'>Vocalist</button>" +
         "</div>"
     );
     $('body').prepend(
-        "<div id='playerCharacterInfo' class='options-box'>" +
-            "<h3 id='playerName'>Name: </h3>" +
-            "<h3 id='playerGender'>Gender: </h3>" +
-            "<h3 id='playerRace'>Race: </h3>" +
-            "<div id='playerStats'>" + 
-                "<h3 id='playerHealth'>Health: </h3>" +
-                "<h3 id='playerAtk'>Attack: </h3>" +
-                "<h3 id='playerDef'>Defense: </h3>" + 
-                "<h3 id='playerRes'>Resistance: </h3>" + 
-            "</div>" +
-        "</div>"
+        // "<div id='playerCharacterInfo' class='container options-box'>" +
+        //     "<h3 id='playerName'>Name: </h3>" +
+        //     "<h3 id='playerGender'>Gender: </h3>" +
+        //     "<h3 id='playerRace'>Race: </h3>" +
+        //     "<div id='playerStats'>" + 
+        //         "<h3 id='playerHealth'>Health: </h3>" +
+        //         "<h3 id='playerAtk'>Attack: </h3>" +
+        //         "<h3 id='playerDef'>Defense: </h3>" + 
+        //         "<h3 id='playerRes'>Resistance: </h3>" + 
+        //     "</div>" +
+        // "</div>"
     );
+    $('body').on('click', '#nav-name', function(){
+        $('#player-action').html(
+            "<div id='name-div' class='fullWidth'>" +
+                "<label type='text' for='name' class='niceLabel'>" + "What is Your Name: " + "</label><input id='charName' type='text' class='niceInput'> <button id='submitName' class='selectionBtn'>Submit Name</button>" +
+            "</div>"
+        );
+        $('#submitName').on('click', function(){
+            playerName = $('#charName').val();
+            $('#charName').val('');
+            playerStats.pName = playerName;
+            
+            // $(document).off('keypress');
+        })
+    });
+    $('body').on('click', '#nav-gender', function(){
+        $('#player-action').html(
+            "<div id='genderDiv' class='fullWidth'>" +
+                "<p class='niceLabel'>" + "What is Your Gender: " + "</p>" +
+            "</div>"
+        );
+        for (var gender in genders) {
+            $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>");
+        }
+        $('.selectionBtn').on('click', function(){
+            var selectedBtn = $(this);
+            if(selectedBtn.hasClass('genderBtn')) {
+                playerGender = selectedBtn.val();
+                playerStats.pGender = playerGender;
+                $('#playerGender').append(playerStats.pGender);
+                
+            } else {
+                return false;
+            }
+        })
+    });
+    $('body').on('click', '#nav-race', function(){
+        $('#player-action').html(
+            "<div id='raceDiv' class='fullWidth'>" +
+                "<p class='niceLabel'>" + "Choose Your Race: " + "</label>" +
+            "</div>"
+        );
+        for (var race in races) {
+            $('#raceDiv').append("<button id='" + race + "' value='" + race + "' class='selectionBtn raceBtn'>" + race + "</button>")
+        }
+        $('.selectionBtn').on('click', function(){
+            var selectedBtn = $(this);
+            if(selectedBtn.hasClass('raceBtn')) {
+                playerRace = selectedBtn.val();
+                playerStats.pRace = playerRace;
+                $('#playerRace').append(playerStats.pRace);
+                
+            } else {
+                return false;
+            }
+        })
+    });
+    $('body').on('click', '#nav-class', function(){
+        $('#player-action').html(
+            "<div id='classDiv' class='container'>" +
+                "<p class='niceLabel'>" + "Choose Your Class: " + "</p>" +
+                "<div id='class-tabs'></div>" +
+            "</div>" 
+        );
+    });
+    $('body').on('click', '#nav-confirm', function(){
+        $('#player-action').html(
+            "<div id='playerCharacterInfo'>" +
+            "<h3 id='playerName'>Name: </h3>" + playerStats.pName +
+            "<h3 id='playerGender'>Gender: </h3>" + playerStats.pGender +
+            "<h3 id='playerRace'>Race: </h3>" + playerStats.pRace +
+            "<div id='playerStats'>" + 
+                "<h3 id='playerHealth'>Health: </h3>" + playerStats.statBaseHealth +
+                "<h3 id='playerAtk'>Attack: </h3>" + playerStats.statBaseAtk +
+                "<h3 id='playerDef'>Defense: </h3>" + playerStats.statBaseDefense +
+                "<h3 id='playerRes'>Resistance: </h3>" + playerStats.statBaseResistance +
+            "</div>" +
+            "<div id='finish' class='fullWidth'>" +
+            "<button id='submitOne' class='selectionBtn'> Submit </button>" +
+        "</div>"
+        );
+    });
+
     function renderClass() {
         
     }
@@ -289,32 +377,8 @@ var characterCreation = function(){
     console.log(demoVocalist);
     // ---------------------------------------------------------------
 
-    for (var gender in genders) {
-        $('#genderDiv').append("<button id='" + gender + "' value='" + gender + "' class='selectionBtn genderBtn'>" + gender + "</button>")
-    }
-    for (var race in races) {
-        $('#raceDiv').append("<button id='" + race + "' value='" + race + "' class='selectionBtn raceBtn'>" + race + "</button>")
-    }
-    $('#submitName').on('click', function(){
-        playerName = $('#charName').val();
-        $('#charName').val('');
-        playerStats.pName = playerName;
-        $('#playerName').append(playerStats.pName);
-        // $(document).off('keypress');
-    })
-    $('.selectionBtn').on('click', function(){
-        var selectedBtn = $(this);
-        if(selectedBtn.hasClass('genderBtn')) {
-            playerGender = selectedBtn.val();
-            playerStats.pGender = playerGender;
-            $('#playerGender').append(playerStats.pGender);
-            
-        } else if(selectedBtn.hasClass('raceBtn')) {
-            playerRace = selectedBtn.val();
-            playerStats.pRace = playerRace;
-            $('#playerRace').append(playerStats.pRace);
-        }
-    })
+
+
     $('#submitOne').on('click', function(){
         console.log('Your name is ' + playerStats.pName + '. Your gender is ' + playerStats.pGender + '. Your race is ' + playerStats.pRace + '.');
     })

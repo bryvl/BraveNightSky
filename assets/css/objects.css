@@ -31,19 +31,25 @@ html, body {
 }
 /* Universal Styles */
 .options-box {
-    background-color: #111;
+    background-color: black;
     border: 1px solid rgb(91, 222, 255);
-    border-radius: 5px;
-    width: 65%;
-
+    width: 80%;
 }
-.invisible {
-    visibility: hidden;
+.active {
+    border-bottom: 2px solid white;
+    color: white;
+    /* font-size: 1.75rem; */
 }
-
 /* Character Creation Form */
 .fullWidth {
     width: 100%;
+}
+#character-creation {
+    margin: 0 auto;
+    width: 80%;
+    height: 620px;
+    background: black;
+    border: 1px solid white;
 }
 .niceInput {
     height: 75px;
@@ -78,46 +84,112 @@ html, body {
 #raceDiv {
     display: inline-block;
 }
+#creation-nav {
+    display: block;
+    float: left;
+    width: 10%;
+    height: 100%;
+    border-right: 1px solid white;
+}
+.nav-btn {
+    width: 100%;
+    height: 90px;
+    cursor: pointer;
+    background-color: #111;
+    /* rgb(91, 94, 255) */
+    border: none;
+    border-bottom: 1px solid rgb(91, 222, 255); 
+    color: rgb(91, 222, 255);
+    font-family: Orbitron;
+    font-size: 1.25rem;
+}
+#class-tabs {
+    text-align: center;
+}
+.charClassTab {
+    margin: 10px;
+    border: none;
+    border-bottom: 2px solid rgb(91, 222, 255);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    color: rgb(91, 222, 255);
+    font-size: 1.5rem;
+    font-family: Aldrich;
+}
 
 
 /* ... */
+#temp {
+    clear: both;
+}
 #player-action {
     float: left;
+    width: 89.875%;
+    height: 100%;
+    border: none;
+}
+#classDiv {
+    border-bottom: 1px solid rgb(91, 222, 255);
 }
 .character-card {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    height: 325px;
-    width: 200px;
-    background-color: black;
-    border: 1px solid rgb(91, 222, 255);
-    border-radius: 5px;
+    /* margin-top: 15px; */
+    height: 527px;
+    width: 100%;
+    background-color: #151515;
+    /* border-bottom: 1px solid rgb(91, 222, 255); */
     text-align: center;
     text-transform: capitalize;
     font-family: Aldrich;
 }
-
 .character-card h2 {
     border-bottom: 1px solid rgb(91, 222, 255);
     font-family: Orbitron;
+    margin: 0;
+    padding: 10px;
 }
-
-.character-card p {
-    margin: 4px 0;
+.cardImgDiv {
+    margin: 0;
+    clear: both;
+    background-color: white;
+    color: #bbb;
+    height: 200px;
+    width: 100%;
+    font-size: 5rem;
 }
-
-.char-stats {
-    text-align: left;
+.cardImgDiv p {
+    margin-top: 0;
+}
+.charInfoDiv {
     border-top: 1px solid rgb(91, 222, 255);
+    height: 234px;
 }
-
-
-#char-desc {
-    background-color: black;
-    color: rgb(91, 222, 255);
+.charStatsDiv {
+    float: left;
+    margin-left: 5px;
+    width: 49%;
+    height: 100%;
+    text-align: left;
+    border-right: 1px solid rgb(91, 222, 255);
+    line-height: 1.5;
+    font-size: 1.25rem;
     font-family: Aldrich;
 }
+.charDescDiv {
+    float: left;
+    width: 50%;
+    height: 100%;
+    color: rgb(91, 222, 255);
+    line-height: 1.5;
+    font-size: 1.25rem;
+    font-family: Aldrich;
+}
+.charDescDiv p {
+    margin-top: 25px; 
+}
+
+
+
 
 /* Player Info Section */
 #player-info {
@@ -129,9 +201,12 @@ html, body {
 }
 /* Pseudo Classes */
 
-.character-card:hover {
-    border: 2px solid rgb(91, 222, 255);
-    box-shadow: 3px 3px;
+
+.charClassTab:hover {
+    border-bottom: 2px solid white;
+    color: white;
+    /* font-size: 1.75rem; */
+    transition-duration: .5s;
 }
 .selectionBtn:hover {
     background-color: black;
@@ -140,6 +215,7 @@ html, body {
 }
 
 /* Custom Animations */
+
 @keyframes blinker {
     50% {
         opacity: 0.1;
